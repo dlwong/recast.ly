@@ -1,5 +1,5 @@
 
-var changeClick = (event) => {console.log(event)};
+
 
 // access props.state.singlevideo
 // set equal to current video you are on 
@@ -14,7 +14,7 @@ var VideoListEntry = (props) => (
           </div>
 
         <div className="media-body">
-          <div className="video-list-entry-title" onClick={props.changeVideo}>{props.video.snippet.title}</div>
+          <div className="video-list-entry-title" onClick={() => {props.changeClick(props.video)}}>{props.video.snippet.title}</div>
           <div className="video-list-entry-detail">{props.video.snippet.description}</div>
           </div>
         </div>
