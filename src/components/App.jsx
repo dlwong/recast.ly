@@ -2,6 +2,8 @@ import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
 import Search from './Search.js';
 import exampleVideoData from '../data/exampleVideoData.js';
+import searchYouTube from '../lib/searchYouTube.js';
+import YOUTUBE_API_KEY from '../config/youtube.js';
  
 class App extends React.Component {
   constructor(props) {
@@ -11,6 +13,19 @@ class App extends React.Component {
       exampleVideoData : exampleVideoData,
       videoPlayer: exampleVideoData[0]
     };
+  }
+
+  componentDidMount() {
+    // this.setState({
+    //   exampleVideoData: //don't know how to access here
+    // })
+    searchYouTube(
+      {key: YOUTUBE_API_KEY, query: 'cats', max: 10}, (data) => { this.setState({exampleVideoData: data, videoPlayer: data[0]})}
+    )
+  }
+
+  componentDidUpdate() {
+    console.log('update')
   }
 
   changeClick(video) {
