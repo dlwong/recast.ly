@@ -1,19 +1,19 @@
-import YOUTUBE_API_KEY from '../config/youtube.js'
+import YOUTUBE_API_KEY from '../config/youtube.js';
 
 var searchYouTube = (options, callback) => {
 
   $.ajax({
-    url: `https://www.googleapis.com/youtube/v3/search`,
+    url: 'https://www.googleapis.com/youtube/v3/search',
     type: 'GET',
     dataType: 'json',
     data: {
-          part: 'snippet',
-          key: options.key,
-          q: options.query,
-          maxResults: options.max,
-          videoEmbeddable: true,
-          type: 'video'
-        },
+      part: 'snippet',
+      key: options.key,
+      q: options.query,
+      maxResults: options.max,
+      videoEmbeddable: true,
+      type: 'video'
+    },
     contentType: 'application/json',
     success: function (data) {
       console.log('message sent');
@@ -22,7 +22,7 @@ var searchYouTube = (options, callback) => {
     error: function (data) {
       console.error('message failed');
     }
-  })
+  });
 
 };
 

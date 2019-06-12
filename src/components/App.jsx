@@ -9,10 +9,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.changeClick = this.changeClick.bind(this);
-    this.handleQuery = this.handleQuery;
+    this.handleQuery = this.handleQuery.bind(this);
     this.state = {
       exampleVideoData : [],
-      videoPlayer: exampleVideoData[0]
+      videoPlayer: exampleVideoData[0],
+      query: 'puppies'
     };
   }
 
@@ -20,30 +21,34 @@ class App extends React.Component {
     // this.setState({
     //   exampleVideoData: //don't know how to access here
     // })
-    searchYouTube({key: YOUTUBE_API_KEY, query: 'puppies', max: 2}, (data) => { this.setState({exampleVideoData: data, videoPlayer: data[0]})})
+    searchYouTube({key: YOUTUBE_API_KEY, query: this.state.query, max: 2}, (data) => { this.setState({exampleVideoData: data, videoPlayer: data[0]})})
   }
 
-  componentDidUpdate() {
-    console.log('update')
-  }
-
-  handleQuery(options, callback) {
-    searchYouTube.bind(this, options, callback);
+  handleQuery(target) {
+    this.setState({query:target},() => {
+      console.log(this.state.query);
+      searchYouTube({
+        key: YOUTUBE_API_KEY,
+        query: this.state.query,
+        max: 2
+      }, (data) => {
+        this.setState({
+          exampleVideoData: data,
+          videoPlayer: data[0]
+        });
+      });
+    });
   }
 
   changeClick(video) {
     this.setState({videoPlayer:video});
   }
 
-  // handleQuery(query) {
-  //   this.setState({query:query});
-  // }
-
   render() {
     return (<div>
     <nav className="navbar">
       <div className="col-md-6 offset-md-3">
-        <div><Search search={this.handleQuery}/></div>
+        <div><Search query={this.state.query} handleQuery={this.handleQuery}/></div>
       </div>
     </nav>
     <div className="row">
